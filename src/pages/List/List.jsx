@@ -6,16 +6,20 @@ import { toast } from "react-toastify";
 
 const List = () => {
   const [foods, setFoods] = useState([]);
-  const [loading, setLoading] = useState(true); // For fetching list
-  const [removingId, setRemovingId] = useState(null); // Track which item is being removed
+  const [loading, setLoading] = useState(true);
+  const [removingId, setRemovingId] = useState(null);
 
-  // Fetch foods
+  // Fetch foods from API
   const fetchFoods = async () => {
     try {
       setLoading(true);
       const res = await axios.get(`${url}/api/food/list`);
       if (res.data.success) {
-        setFoods(res.data.data);
+        // Sort by date descending
+        const sortedFoods = res.data.data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        setFoods(sortedFoods);
       }
     } catch (err) {
       console.error("❌ Failed to fetch food list:", err);
@@ -25,7 +29,7 @@ const List = () => {
     }
   };
 
-  // Remove food
+  // Remove food item
   const removeFood = async (id) => {
     if (!window.confirm("Are you sure you want to delete this food item?")) return;
 
@@ -50,10 +54,16 @@ const List = () => {
     fetchFoods();
   }, []);
 
-  // Format date as DD/MM/YYYY
+  // Format date as DD/MM/YYYY HH:mm:ss (24-hour)
   const formatDate = (dateString) => {
+    if (!dateString) return "-";
     const date = new Date(dateString);
-    return date.toLocaleDateString(); // You can customize locale if needed
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      
+    });
   };
 
   return (
@@ -61,7 +71,6 @@ const List = () => {
       <div className="food-list">
         <h2 className="list-title">Food Items</h2>
 
-        {/* Loading State */}
         {loading ? (
           <div className="loading-container">
             <div className="spinner"></div>
@@ -71,14 +80,14 @@ const List = () => {
           <p className="empty-message">No food items available</p>
         ) : (
           <>
-            {/* Table View for PC */}
+            {/* Desktop Table */}
             <div className="table-container">
               <table className="food-table">
                 <thead>
                   <tr>
                     <th>Image</th>
                     <th>Date</th>
-                    <th>tagNo</th>
+                    <th>Tag No</th>
                     <th>Plant Name</th>
                     <th>Action</th>
                     <th>Reason</th>
@@ -90,14 +99,14 @@ const List = () => {
                   {foods.map((item) => (
                     <tr key={item._id}>
                       <td>
-                        <img src={item.image} alt={item.name} />
+                        <img src={item.image} alt={item.name || item.tagNo} />
                       </td>
                       <td>{formatDate(item.date)}</td>
-                      <td>{item.tagNo}</td>
-                      <td>{item.plantName}</td>
-                      <td>{item.action}</td>
-                      <td>{item.reason}</td>
-                      <td>{item.remark}</td>
+                      <td>{item.tagNo || "-"}</td>
+                      <td>{item.plantName || "-"}</td>
+                      <td>{item.action || "-"}</td>
+                      <td>{item.reason || "-"}</td>
+                      <td>{item.remark || "-"}</td>
                       <td>
                         <button
                           className="remove-btn"
@@ -120,18 +129,30 @@ const List = () => {
               </table>
             </div>
 
-            {/* Mobile List View */}
+            {/* Mobile Card View */}
             <div className="mobile-list">
-              {foods.map((item) => (
+              {foods.map((item, index) => (
                 <div className="mobile-item" key={item._id}>
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.image} alt={item.name || item.tagNo} />
                   <div className="mobile-info">
-                    <h3><strong>DATE :</strong> {formatDate(item.date)}</h3>
-                    <h3><strong>TAG NO :</strong>{item.tagNo}</h3>
-                    <p className="category"><strong>PLANT NAME :</strong>{item.plantName}</p>
-                    <p className="price"><strong>PROBLEM :</strong> {item.action}</p>
-                    <p className="desc"><strong>SERVICES :</strong>{item.reason}</p>
-                    <p className="desc"><strong>REMARK :</strong>{item.remark}</p>
+                    <h3>
+                      <strong>DATE :</strong> {formatDate(item.date)}
+                    </h3>
+                    <h3>
+                      <strong>TAG NO :</strong> {item.tagNo || "-"}
+                    </h3>
+                    <p className="category">
+                      <strong>PLANT NAME :</strong> {item.plantName || "-"}
+                    </p>
+                    <p className="price">
+                      <strong>PROBLEM :</strong> {item.action || "-"}
+                    </p>
+                    <p className="desc">
+                      <strong>SERVICES :</strong> {item.reason || "-"}
+                    </p>
+                    <p className="desc">
+                      <strong>REMARK :</strong> {item.remark || "-"}
+                    </p>
                   </div>
                   <button
                     className="remove-btn"
