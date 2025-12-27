@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 
 const List = () => {
   const [foods, setFoods] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ For fetching list
-  const [removingId, setRemovingId] = useState(null); // ✅ Track which item is being removed
+  const [loading, setLoading] = useState(true); // For fetching list
+  const [removingId, setRemovingId] = useState(null); // Track which item is being removed
 
   // Fetch foods
   const fetchFoods = async () => {
@@ -50,6 +50,12 @@ const List = () => {
     fetchFoods();
   }, []);
 
+  // Format date as DD/MM/YYYY
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(); // You can customize locale if needed
+  };
+
   return (
     <div className="page-content">
       <div className="food-list">
@@ -71,10 +77,12 @@ const List = () => {
                 <thead>
                   <tr>
                     <th>Image</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price (₹)</th>
-                    <th>Description</th>
+                    <th>Date</th>
+                    <th>tagNo</th>
+                    <th>Plant Name</th>
+                    <th>Action</th>
+                    <th>Reason</th>
+                    <th>Remark</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -84,10 +92,12 @@ const List = () => {
                       <td>
                         <img src={item.image} alt={item.name} />
                       </td>
-                      <td>{item.name}</td>
-                      <td>{item.category}</td>
-                      <td>{item.price}</td>
-                      <td>{item.description}</td>
+                      <td>{formatDate(item.date)}</td>
+                      <td>{item.tagNo}</td>
+                      <td>{item.plantName}</td>
+                      <td>{item.action}</td>
+                      <td>{item.reason}</td>
+                      <td>{item.remark}</td>
                       <td>
                         <button
                           className="remove-btn"
@@ -116,10 +126,12 @@ const List = () => {
                 <div className="mobile-item" key={item._id}>
                   <img src={item.image} alt={item.name} />
                   <div className="mobile-info">
-                    <h3>{item.name}</h3>
-                    <p className="category">{item.category}</p>
-                    <p className="price">₹{item.price}</p>
-                    <p className="desc">{item.description}</p>
+                    <h3><strong>DATE :</strong> {formatDate(item.date)}</h3>
+                    <h3><strong>TAG NO :</strong>{item.tagNo}</h3>
+                    <p className="category"><strong>PLANT NAME :</strong>{item.plantName}</p>
+                    <p className="price"><strong>PROBLEM :</strong> {item.action}</p>
+                    <p className="desc"><strong>SERVICES :</strong>{item.reason}</p>
+                    <p className="desc"><strong>REMARK :</strong>{item.remark}</p>
                   </div>
                   <button
                     className="remove-btn"

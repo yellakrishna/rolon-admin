@@ -6,10 +6,17 @@ import { toast } from "react-toastify";
 
 const Add = () => {
   const [data, setData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "Vegetarian", // ✅ Default matches option value
+    // name: "",
+    // description: "",
+    // price: "",
+    category: "Vegetarian",
+    sno: 1,     
+    date: new Date().toISOString().split("T")[0],
+    tagNo: " ",
+    plantName: " ",
+    reason: " ",
+    action: " ",
+    remark: " ",
   });
 
   const [image, setImage] = useState(null);
@@ -21,11 +28,29 @@ const Add = () => {
 
     // Client-side validations
     if (!image) return toast.error("Please select an image");
-    if (!data.name.trim()) return toast.error("Please enter a product name");
-    if (!data.description.trim())
-      return toast.error("Please enter a description");
-    if (!data.price || Number(data.price) <= 0)
-      return toast.error("Please enter a valid price");
+    // if (!data.name.trim()) return toast.error("Please enter a product name");
+    // if (!data.description.trim())
+    //   return toast.error("Please enter a description");
+    if (!data.category.trim())
+      return toast.error("Please select a category"); 
+    if (!data.date.trim())
+      return toast.error("Please select a valid date"); 
+    if (!data.sno || Number(data.sno) <= 0)
+      return toast.error("Please enter a valid SNO");
+if (!data.tagNo.trim())
+      return toast.error("Please enter a valid Tag Number");
+    if (!data.plantName.trim())
+      return toast.error("Please enter a valid Plant Name");  
+    if (!data.reason.trim())
+      return toast.error("Please enter a valid Reason");  
+    if (!data.action.trim())
+      return toast.error("Please enter a valid Action");  
+    if (!data.remark.trim())
+      return toast.error("Please enter a valid Remark");  
+  
+
+    // if (!data.price || Number(data.price) <= 0)
+    //   return toast.error("Please enter a valid price");
 
     try {
       setLoading(true);
@@ -47,10 +72,17 @@ const Add = () => {
 
         // Reset form
         setData({
-          name: "",
-          description: "",
-          price: "",
+          // name: "",
+          // description: "",
+          // price: "",
           category: "Vegetarian", // ✅ Matches select
+          sno: 1,     
+          date: new Date().toISOString().split("T")[0],
+          tagNo: " ",   
+          plantName: " ",
+          reason: " ",  
+          action: " ",
+          remark: " ",
         });
         setImage(null);
         document.getElementById("image").value = "";
@@ -94,28 +126,89 @@ const Add = () => {
             />
           </div>
 
-          {/* Product Name */}
-          <div className="add-product-name flex-col">
-            <p>Product name</p>
+         
+
+
+            <div className="add-product-name flex-col">
+            <p>S.NO</p>
             <input
-              name="name"
+              name="sno"
               onChange={onChangeHandler}
-              value={data.name}
+              value={data.sno}
+              type="number"
+              placeholder="Type here"
+              required
+            />
+          </div>
+
+            <div className="add-product-name flex-col">
+            <p>TAG NO</p>
+            <input
+              name="tagNo"
+              onChange={onChangeHandler}
+              value={data.tagNo}
               type="text"
               placeholder="Type here"
               required
             />
           </div>
 
-          {/* Product Description */}
-          <div className="add-product-description flex-col">
-            <p>Product description</p>
-            <textarea
-              name="description"
+          <div className="add-product-name flex-col">
+            <p>PLANT NAME</p>
+            <input
+              name="plantName"
               onChange={onChangeHandler}
-              value={data.description}
-              rows={6}
-              placeholder="Write content here"
+              value={data.plantName}
+              type="text"
+              placeholder="Type here"
+              required
+            />
+          </div>
+
+            <div className="add-product-name flex-col">
+            <p>DATE</p>
+            <input
+              name="date"
+              onChange={onChangeHandler}
+              value={data.date}
+              type="date"
+              placeholder="Type here"
+              required
+            />
+          </div>
+
+            <div className="add-product-description flex-col">
+            <p>PROBLEM</p>
+            <textarea
+              name="action"
+              onChange={onChangeHandler}
+              value={data.action}
+              type="text"
+              placeholder="Type here"
+              required
+            />
+          </div>
+
+            <div className="add-product-description flex-col">
+            <p>SERVICES</p>
+            <textarea
+              name="reason"
+              onChange={onChangeHandler}
+              value={data.reason}
+              type="text"
+              placeholder="Type here"
+              required
+            />
+          </div>
+
+            <div className="add-product-name flex-col">
+            <p>REMARK</p>
+            <textarea
+              name="remark"
+              onChange={onChangeHandler}
+              value={data.remark}
+              type="text"
+              placeholder="Type here"
               required
             />
           </div>
@@ -130,36 +223,14 @@ const Add = () => {
                 onChange={onChangeHandler}
                 value={data.category}
               >
-                <option value="Vegetarian">Vegetarian</option>
-                <option value="Non-Vegetarian">Non-Vegetarian</option>
-                <option value="Fast Food">Fast Food</option>
-                <option value="Seafood">Seafood</option>
-                <option value="Salads">Salads</option>
-                <option value="Soups">Soups</option>
-                <option value="Pasta">Pasta</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Grilled">Grilled</option>
-                <option value="Beverages">Beverages</option>
-                <option value="Desserts">Desserts</option>
-                <option value="Sandwiches">Sandwiches</option>
-                <option value="Burgers">Burgers</option>
-                <option value="BBQ">BBQ</option>
-                <option value="Breakfast">Breakfast</option>
+                <option value="CMS">CMS</option>
+                <option value="ALKALIES">ALKALIES</option>
+                
               </select>
             </div>
 
             {/* Price */}
-            <div className="add-price flex-col">
-              <p>Product Price</p>
-              <input
-                type="number"
-                name="price"
-                onChange={onChangeHandler}
-                value={data.price}
-                placeholder="₹25"
-                required
-              />
-            </div>
+            
           </div>
 
           {/* Submit Button */}

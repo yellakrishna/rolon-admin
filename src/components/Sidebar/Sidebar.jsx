@@ -31,7 +31,7 @@ const Sidebar = () => {
           <span>List Items</span>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/orders"
           className={({ isActive }) =>
             isActive ? "sidebar-option active" : "sidebar-option"
@@ -39,8 +39,8 @@ const Sidebar = () => {
         >
           <img src={assets.order_icon} alt="Orders" />
           <span>Orders</span>
-        </NavLink>
-          <NavLink
+        </NavLink> */}
+          {/* <NavLink
           to="/Menu"
           className={({ isActive }) =>
             isActive ? "sidebar-option active" : "sidebar-option"
@@ -48,7 +48,7 @@ const Sidebar = () => {
         >
           <img src={food} alt="Orders" className="fishs" />
           <span>Menu</span>
-        </NavLink>
+        </NavLink> */}
       </nav>
     </aside>
   );

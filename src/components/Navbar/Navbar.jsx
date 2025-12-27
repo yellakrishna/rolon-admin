@@ -1,7 +1,8 @@
 import React from "react";
 import "./Navbar.css";
 import logo from "/logo-design.jpg";
-import food from "/veg.png";
+import food from "/rolon.jpg";
+
 
 
 const Navbar = () => {
