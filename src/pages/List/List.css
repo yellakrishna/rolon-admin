@@ -151,7 +151,7 @@ body, html {
 /* Responsive Design */
 @media (min-width: 768px) {
   .table-container {
-    display: none;
+    display: block;
   }
   .mobile-list {
     display: block;
