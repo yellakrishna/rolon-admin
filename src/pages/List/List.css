@@ -151,10 +151,10 @@ body, html {
 /* Responsive Design */
 @media (min-width: 768px) {
   .table-container {
-    display: block;
+    display: none;
   }
   .mobile-list {
-    display: none;
+    display: block ;
   }
 }
 
