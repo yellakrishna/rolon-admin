@@ -129,7 +129,7 @@ if (!data.tagNo.trim())
          
 
 
-            <div className="add-product-name flex-col">
+            {/* <div className="add-product-name flex-col">
             <p>S.NO</p>
             <input
               name="sno"
@@ -139,7 +139,7 @@ if (!data.tagNo.trim())
               placeholder="Type here"
               required
             />
-          </div>
+          </div> */}
 
             <div className="add-product-name flex-col">
             <p>TAG NO</p>
